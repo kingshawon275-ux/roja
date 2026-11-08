@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /embed/
+Disallow: /assets/
+
+Sitemap: https://tarjetarojadirect.live/sitemap.xml

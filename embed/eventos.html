@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ver evento en vivo | Tarjeta Roja TV</title>
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+  <style>
+    html, body { background: #000; height: 100%; margin: 0; }
+    #player { background: #000; border: 0; width: 100%; height: 100%; position: fixed; inset: 0; }
+  </style>
+</head>
+<body>
+  <iframe id="player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="no-referrer"></iframe>
+  <script>
+    (function () {
+      var params = new URLSearchParams(location.search);
+      var url = '';
+
+      // 1) ?r=<base64 de la URL real>
+      var r = params.get('r');
+      if (r) {
+        try {
+          var b = decodeURIComponent(r).replace(/ /g, '+');
+          b += '='.repeat((4 - (b.length % 4)) % 4);
+          var d = atob(b);
+          if (/^https?:\/\//i.test(d)) url = d;
+        } catch (e) {}
+      }
+
+      // 2) ?url=<URL real codificada>
+      if (!url) {
+        var u = params.get('url');
+        if (u) {
+          try { url = decodeURIComponent(u); } catch (e) { url = u; }
+        }
+      }
+
+      // 3) ?canal=<nombre de stream>
+      if (!url) {
+        var c = params.get('canal');
+        if (c) url = 'https://la18hd.su/vivo/canal.php?stream=' + encodeURIComponent(c);
+      }
+
+      var f = document.getElementById('player');
+      if (url && f) f.src = url;
+    })();
+  </script>
+  <!-- Histats.com  START  (aync)-->
+  <script type="text/javascript">var _Hasync= _Hasync|| [];
+    _Hasync.push(['Histats.start', '1,5061097,4,0,0,0,00010000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+    (function() {
+      var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+      hs.src = ('//s10.histats.com/js15_as.js');
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+    })();</script>
+  <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5061097&101" alt="hits counter" border="0"></a></noscript>
+  <!-- Histats.com  END  -->
+</body>
+</html>
